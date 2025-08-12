@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PCI Scripts Inspector - Demo Page</title>
+  <meta name="description"
+    content="Comprehensive demo page showcasing all script variants for PCI DSS inventory testing">
+
+  <!-- Security Headers Demo -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.example.com https://js.stripe.com; style-src 'self' 'unsafe-inline';">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
+
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #333;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+      color: white;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 2.5em;
+      font-weight: 300;
+    }
+
+    .header p {
+      margin: 10px 0 0 0;
+      opacity: 0.9;
+      font-size: 1.1em;
+    }
+
+    .content {
+      padding: 40px;
+    }
+
+    .section {
+      margin-bottom: 40px;
+      padding: 30px;
+      border: 1px solid #e1e8ed;
+      border-radius: 8px;
+      background: #fafbfc;
+    }
+
+    .section h2 {
+      color: #2c3e50;
+      border-bottom: 2px solid #3498db;
+      padding-bottom: 10px;
+      margin-top: 0;
+    }
+
+    .script-demo {
+      background: #2d3748;
+      color: #e2e8f0;
+      padding: 20px;
+      border-radius: 6px;
+      margin: 15px 0;
+      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+      font-size: 14px;
+      overflow-x: auto;
+    }
+
+    .script-info {
+      background: #edf2f7;
+      border-left: 4px solid #4299e1;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 0 6px 6px 0;
+    }
+
+    .script-info h4 {
+      margin: 0 0 10px 0;
+      color: #2d3748;
+    }
+
+    .script-info ul {
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+
+    .script-info li {
+      margin: 5px 0;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .status-new {
+      background: #fed7d7;
+      color: #c53030;
+    }
+
+    .status-changed {
+      background: #fef5e7;
+      color: #d69e2e;
+    }
+
+    .status-missed {
+      background: #e6fffa;
+      color: #2c7a7b;
+    }
+
+    .status-ok {
+      background: #c6f6d5;
+      color: #2f855a;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .card h3 {
+      margin: 0 0 15px 0;
+      color: #2d3748;
+    }
+
+    .footer {
+      background: #2d3748;
+      color: white;
+      text-align: center;
+      padding: 30px;
+      margin-top: 40px;
+    }
+
+    .footer a {
+      color: #63b3ed;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🔒 PCI Scripts Inspector</h1>
+      <p>Comprehensive Demo Page for Script Variants Testing</p>
+    </div>
+
+    <div class="content">
+      <div class="section">
+        <h2>📋 Overview</h2>
+        <p>This page demonstrates all possible script variants for PCI DSS inventory testing, including:</p>
+        <ul>
+          <li><strong>Inline Scripts</strong> - Embedded directly in HTML</li>
+          <li><strong>External Scripts</strong> - Loaded from external sources</li>
+          <li><strong>Security Headers</strong> - Various CSP and security configurations</li>
+          <li><strong>Script Attributes</strong> - Different attribute combinations</li>
+          <li><strong>Integration Types</strong> - Various ways scripts are integrated</li>
+        </ul>
+      </div>
+
+      <!-- Inline Scripts Section -->
+      <div class="section">
+        <h2>📝 Inline Scripts</h2>
+
+        <div class="script-info">
+          <h4>Inline Script #1 - Basic Analytics</h4>
+          <ul>
+            <li><strong>Integration Type:</strong> inline</li>
+            <li><strong>Purpose:</strong> Basic page analytics tracking</li>
+            <li><strong>Security:</strong> No integrity hash</li>
+          </ul>
+        </div>
+
+        <div class="script-demo">
+          &lt;script&gt;
+          // Basic analytics tracking
+          console.log('Page loaded:', window.location.href);
+          const pageLoadTime = Date.now();
+          localStorage.setItem('lastVisit', pageLoadTime);
+          &lt;/script&gt;
+        </div>
+
+        <div class="script-info">
+          <h4>Inline Script #2 - Payment Form Validation</h4>
+          <ul>
+            <li><strong>Integration Type:</strong> inline</li>
+            <li><strong>Purpose:</strong> Payment form validation logic</li>
+            <li><strong>Security:</strong> No integrity hash</li>
+          </ul>
+        </div>
+
+        <div class="script-demo">
+          &lt;script&gt;
+          function validatePaymentForm() {
+          const cardNumber = document.getElementById('cardNumber').value;
+          const expiry = document.getElementById('expiry').value;
+
+          if (!cardNumber || cardNumber.length !== 16) {
+          alert('Invalid card number');
+          return false;
+          }
+
+          if (!expiry || !/^\d{2}\/\d{2}$/.test(expiry)) {
+          alert('Invalid expiry date');
+          return false;
+          }
+
+          return true;
+          }
+          &lt;/script&gt;
+        </div>
+
+        <div class="script-info">
+          <h4>Inline Script #3 - Security Token Generation</h4>
+          <ul>
+            <li><strong>Integration Type:</strong> inline</li>
+            <li><strong>Purpose:</strong> CSRF token generation</li>
+            <li><strong>Security:</strong> No integrity hash</li>
+          </ul>
+        </div>
+
+        <div class="script-demo">
+          &lt;script&gt;
+          // Generate CSRF token for form submission
+          function generateCSRFToken() {
+          const token = Math.random().toString(36).substring(2, 15) +
+          Math.random().toString(36).substring(2, 15);
+          document.getElementById('csrfToken').value = token;
+          return token;
+          }
+
+          // Auto-generate on page load
+          document.addEventListener('DOMContentLoaded', generateCSRFToken);
+          &lt;/script&gt;
+        </div>
+      </div>
+
+      <!-- External Scripts Section -->
+      <div class="section">
+        <h2>🔗 External Scripts</h2>
+
+        <div class="script-info">
+          <h4>External Script #1 - Stripe.js (with integrity)</h4>
+          <ul>
+            <li><strong>Integration Type:</strong> external</li>
+            <li><strong>Source:</strong> https://js.stripe.com/v3/</li>
+            <li><strong>Purpose:</strong> Payment processing</li>
+            <li><strong>Security:</strong> Has integrity hash</li>
+          </ul>
+        </div>
+
+        <div class="script-demo">
+          &lt;script
+          src="https://js.stripe.com/v3/"
+          integrity="sha384-abc123def456ghi789jkl012mno345pqr678stu901vwx234yz567abc890def123"
+          crossorigin="anonymous"&gt;
+          &lt;/script&gt;
+        </div>
+
+        <div class="script-info">
+          <h4>External Script #2 - Google Analytics (no integrity)</h4>
+          <ul>
+            <li><strong>Integration Type:</strong> external</li>
+            <li><strong>Source:</strong> https://www.googletagmanager.com/gtag/js</li>
+            <li><strong>Purpose:</strong> Analytics tracking</li>
+            <li><strong>Security:</strong> No integrity hash</li>
+          </ul>
+        </div>
+
+        <div class="script-demo">
+          &lt;script
+          src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"
+          async&gt;
+          &lt;/script&gt;
+        </div>
+
+        <div class="script-info">
+          <h4>External Script #3 - Custom Widget (with attributes)</h4>
+          <ul>
+            <li><strong>Integration Type:</strong> external</li>
+            <li><strong>Source:</strong> https://cdn.example.com/widget.js</li>
+            <li><strong>Purpose:</strong> Custom payment widget</li>
+            <li><strong>Security:</strong> Has integrity hash and attributes</li>
+          </ul>
+        </div>
+
+        <div class="script-demo">
+          &lt;script
+          src="https://cdn.example.com/widget.js"
+          integrity="sha384-def456ghi789jkl012mno345pqr678stu901vwx234yz567abc890def123ghi456"
+          crossorigin="anonymous"
+          defer
+          data-widget-id="payment-form"
+          data-environment="production"&gt;
+          &lt;/script&gt;
+        </div>
+
+        <div class="script-info">
+          <h4>External Script #4 - jQuery (legacy, no security)</h4>
+          <ul>
+            <li><strong>Integration Type:</strong> external</li>
+            <li><strong>Source:</strong> https://code.jquery.com/jquery-3.6.0.min.js</li>
+            <li><strong>Purpose:</strong> DOM manipulation library</li>
+            <li><strong>Security:</strong> No integrity hash, no crossorigin</li>
+          </ul>
+        </div>
+
+        <div class="script-demo">
+          &lt;script src="https://code.jquery.com/jquery-3.6.0.min.js"&gt;&lt;/script&gt;
+        </div>
+      </div>
+
+      <!-- Dynamic Script Loading Section -->
+      <div class="section">
+        <h2>⚡ Dynamic Script Loading</h2>
+
+        <div class="script-info">
+          <h4>Dynamic Script #1 - Conditional Loading</h4>
+          <ul>
+            <li><strong>Integration Type:</strong> external (dynamic)</li>
+            <li><strong>Purpose:</strong> Load scripts based on user preferences</li>
+            <li><strong>Security:</strong> No integrity hash</li>
+          </ul>
+        </div>
+
+        <div class="script-demo">
+          &lt;script&gt;
+          // Dynamically load scripts based on user preferences
+          function loadUserPreferences() {
+          const userPrefs = localStorage.getItem('userPreferences');
+          if (userPrefs && JSON.parse(userPrefs).analytics) {
+          const script = document.createElement('script');
+          script.src = 'https://cdn.example.com/analytics.js';
+          script.async = true;
+          document.head.appendChild(script);
+          }
+          }
+
+          document.addEventListener('DOMContentLoaded', loadUserPreferences);
+          &lt;/script&gt;
+        </div>
+
+        <div class="script-info">
+          <h4>Dynamic Script #2 - Feature Detection</h4>
+          <ul>
+            <li><strong>Integration Type:</strong> external (dynamic)</li>
+            <li><strong>Purpose:</strong> Load polyfills when needed</li>
+            <li><strong>Security:</strong> No integrity hash</li>
+          </ul>
+        </div>
+
+        <div class="script-demo">
+          &lt;script&gt;
+          // Load polyfills for older browsers
+          if (!window.Promise) {
+          const script = document.createElement('script');
+          script.src = 'https://cdn.polyfill.io/v2/polyfill.min.js';
+          script.integrity = 'sha384-xyz789abc123def456ghi789jkl012mno345pqr678stu901vwx234yz567abc890';
+          script.crossOrigin = 'anonymous';
+          document.head.appendChild(script);
+          }
+          &lt;/script&gt;
+        </div>
+      </div>
+
+      <!-- Security Headers Section -->
+      <div class="section">
+        <h2>🛡️ Security Headers & CSP</h2>
+
+        <div class="grid">
+          <div class="card">
+            <h3>Content Security Policy</h3>
+            <p><strong>Current Policy:</strong> Restrictive CSP with script-src limitations</p>
+            <div class="script-demo">
+              default-src 'self';
+              script-src 'self' 'unsafe-inline' https://cdn.example.com https://js.stripe.com;
+              style-src 'self' 'unsafe-inline';
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>X-Frame-Options</h3>
+            <p><strong>Value:</strong> DENY</p>
+            <p>Prevents clickjacking attacks</p>
+          </div>
+
+          <div class="card">
+            <h3>X-Content-Type-Options</h3>
+            <p><strong>Value:</strong> nosniff</p>
+            <p>Prevents MIME type sniffing</p>
+          </div>
+
+          <div class="card">
+            <h3>Referrer Policy</h3>
+            <p><strong>Value:</strong> strict-origin-when-cross-origin</p>
+            <p>Controls referrer information</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Script Attributes Section -->
+      <div class="section">
+        <h2>🏷️ Script Attributes</h2>
+
+        <div class="grid">
+          <div class="card">
+            <h3>Security Attributes</h3>
+            <ul>
+              <li><code>integrity</code> - SRI hash verification</li>
+              <li><code>crossorigin</code> - CORS handling</li>
+              <li><code>referrerpolicy</code> - Referrer control</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Loading Attributes</h3>
+            <ul>
+              <li><code>async</code> - Asynchronous loading</li>
+              <li><code>defer</code> - Deferred execution</li>
+              <li><code>type</code> - Script type specification</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Custom Attributes</h3>
+            <ul>
+              <li><code>data-*</code> - Custom data attributes</li>
+              <li><code>id</code> - Element identification</li>
+              <li><code>class</code> - CSS class assignment</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- PCI DSS Status Section -->
+      <div class="section">
+        <h2>📊 PCI DSS Compliance Status</h2>
+
+        <div class="grid">
+          <div class="card">
+            <h3>Script Inventory</h3>
+            <p><strong>Total Scripts:</strong> 21</p>
+            <p><strong>Main Page Scripts:</strong> 15</p>
+            <p><strong>Iframe Scripts:</strong> 6</p>
+            <p><strong>Inline Scripts:</strong> 5 (3 main + 2 iframe)</p>
+            <p><strong>External Scripts:</strong> 16 (12 main + 4 iframe)</p>
+            <p><strong>With Integrity:</strong> 4 (3 main + 1 iframe)</p>
+            <p><strong>Without Integrity:</strong> 17 (12 main + 5 iframe)</p>
+          </div>
+
+          <div class="card">
+            <h3>Security Status</h3>
+            <p><span class="status-badge status-ok">OK</span> Content Security Policy</p>
+            <p><span class="status-badge status-ok">OK</span> X-Frame-Options</p>
+            <p><span class="status-badge status-ok">OK</span> X-Content-Type-Options</p>
+            <p><span class="status-badge status-changed">CHANGED</span> Some scripts modified</p>
+          </div>
+
+          <div class="card">
+            <h3>Review Required</h3>
+            <p><span class="status-badge status-new">NEW</span> 2 new scripts detected</p>
+            <p><span class="status-badge status-changed">CHANGED</span> 1 script modified</p>
+            <p><span class="status-badge status-missed">MISSED</span> 1 authorized script missing</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Iframe with Scripts Section -->
+      <div class="section">
+        <h2>🖼️ Iframe with Embedded Scripts</h2>
+
+        <div class="script-info">
+          <h4>Iframe Content - Nested Scripts</h4>
+          <ul>
+            <li><strong>Integration Type:</strong> iframe with inline and external scripts</li>
+            <li><strong>Purpose:</strong> Demonstrate nested script detection</li>
+            <li><strong>Security:</strong> Mixed security levels within iframe</li>
+          </ul>
+        </div>
+
+        <div class="script-demo">
+          &lt;iframe
+          src="data:text/html;base64,PHNjcmlwdD5jb25zb2xlLmxvZygnSWZyYW1lIGxvYWRlZCcpOzwvc2NyaXB0Pgo8c2NyaXB0IHNyYz0iaHR0cHM6Ly9jZG4uZXhhbXBsZS5jb20vaWZyYW1lLXNjcmlwdC5qcyI+PC9zY3JpcHQ+CjxkaXYgaWQ9ImlmcmFtZS1jb250ZW50Ij5JZnJhbWUgQ29udGVudCB3aXRoIFNjcmlwdHM8L2Rpdj4KPHNjcmlwdD4KICAvLyBJbmxpbmUgc2NyaXB0IGluc2lkZSBpZnJhbWUKICBmdW5jdGlvbiBpZnJhbWVGdW5jdGlvbigpIHsKICAgIGNvbnNvbGUubG9nKCdJZnJhbWUgZnVuY3Rpb24gZXhlY3V0ZWQnKTsKICAgIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdpZnJhbWUtY29udGVudCcpLmlubmVySFRNTCA9ICdVcGRhdGVkIGJ5IGlmcmFtZSBzY3JpcHQhJzsKICB9CiAgCiAgLy8gQ2FsbCBmdW5jdGlvbiBhZnRlciBsb2FkaW5nCiAgc2V0VGltZW91dChpZnJhbWVGdW5jdGlvbiwgMTAwMCk7Cjwvc2NyaXB0Pgo8c2NyaXB0IHNyYz0iaHR0cHM6Ly9jZG4uanNkZWxpdnIubmV0L25wbS9qcXVlcnlAMy42LjAvanF1ZXJ5Lm1pbi5qcyI+PC9zY3JpcHQ+CjxkaXYgaWQ9InZ1ZS1hcHAiPjwvZGl2Pgo8c2NyaXB0IHR5cGU9Im1vZHVsZSI+CiAgLy8gVnVlLmpzIG1vZHVsZSBpbnNpZGUgaWZyYW1lCiAgaW1wb3J0IHsgY3JlYXRlQXBwIH0gZnJvbSAnaHR0cHM6Ly91bnBrZy5jb20vdnVlQDNkaXN0L3Z1ZS5lc20tYnJvd3Nlci5qcyc7CiAgCiAgY29uc3QgaWZyYW1lQXBwID0gY3JlYXRlQXBwKHsKICAgIGRhdGEoKSB7CiAgICAgIHJldHVybiB7CiAgICAgICAgbWVzc2FnZTogJ0lmcmFtZSBWdWUuanMgbG9hZGVkIScKICAgICAgfTsKICAgIH0KICB9KTsKICAKICBpZnJhbWVBcHAubW91bnQoJyN2dWUtYXBwJyk7Cjwvc2NyaXB0Pgo8c2NyaXB0PgogIC8vIER5bmFtaWMgc2NyaXB0IGxvYWRpbmcgaW5zaWRlIGlmcmFtZQogIGZ1bmN0aW9uIGxvYWRJZnJhbWVTcmlwdCgpIHsKICAgIGlmICh3aW5kb3cuanF1ZXJ5KSB7CiAgICAgIGNvbnNvbGUubG9nKCdKUXVlcnkgbG9hZGVkIGluc2lkZSBpZnJhbWUnKTsKICAgICAgCiAgICAgIC8vIExvYWQgYWRkaXRpb25hbCBzY3JpcHQgZHluYW1pY2FsbHkKICAgICAgY29uc3Qgc2NyaXB0ID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnc2NyaXB0Jyk7CiAgICAgIHNjcmlwdC5zcmMgPSAnaHR0cHM6Ly9jZG4uZXhhbXBsZS5jb20vaWZyYW1lLWR5bmFtaWMuanMnOwogICAgICBzY3JpcHQuaW50ZWdyaXR5ID0gJ3NoYTM4NC1hYmMxMjNkZWY0NTZnaGk3ODlqa2wwMTJtbm8zNDVwcXI2NzhzdHU5MDF2d3gyMzR5ejo1NjdhYmM4OTBkZWYxMjNoaWQ0NTYnOwogICAgICBzY3JpcHQuY3Jvc3NPcmlnaW4gPSAnYW5vbnltb3VzJzsKICAgICAgZG9jdW1lbnQuaGVhZC5hcHBlbmRDaGlsZChzY3JpcHQpOwogICAgfQogIH0KICAKICAvLyBMb2FkIGFmdGVyIGFsbCBzY3JpcHRzIGFyZSBsb2FkZWQKICB3aW5kb3cuYWRkRXZlbnRMaXN0ZW5lcignbG9hZCcsIGxvYWRJZnJhbWVTcmlwdCk7Cjwvc2NyaXB0Pg=="
+          width="100%"
+          height="400"
+          style="border: 2px solid #3498db; border-radius: 8px;"
+          title="Iframe with embedded scripts for testing"
+          sandbox="allow-scripts allow-same-origin"
+          loading="lazy">
+          </iframe>
+        </div>
+
+        <div class="script-info">
+          <h4>Iframe Script Contents (Base64 Decoded):</h4>
+          <ul>
+            <li><strong>Inline Script #1:</strong> Console log on iframe load</li>
+            <li><strong>External Script #1:</strong> https://cdn.example.com/iframe-script.js</li>
+            <li><strong>Inline Script #2:</strong> Function to update iframe content</li>
+            <li><strong>External Script #2:</strong> jQuery 3.6.0 from CDN</li>
+            <li><strong>Module Script:</strong> Vue.js ES6 module import</li>
+            <li><strong>Dynamic Script:</strong> Dynamically loaded script with integrity</li>
+          </ul>
+        </div>
+
+        <div class="script-info">
+          <h4>Iframe Security Features:</h4>
+          <ul>
+            <li><strong>Sandbox:</strong> allow-scripts allow-same-origin</li>
+            <li><strong>Loading:</strong> lazy loading for performance</li>
+            <li><strong>Title:</strong> Descriptive title for accessibility</li>
+            <li><strong>Styling:</strong> Visual border and rounded corners</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Cross-Origin Iframe Section -->
+      <div class="section">
+        <h2>🌐 Cross-Origin Iframe (Google.com)</h2>
+
+        <div class="script-info">
+          <h4>External Website Iframe</h4>
+          <ul>
+            <li><strong>Integration Type:</strong> cross-origin iframe</li>
+            <li><strong>Purpose:</strong> Test external website script detection</li>
+            <li><strong>Security:</strong> Cross-origin restrictions apply</li>
+            <li><strong>Content:</strong> Live Google.com website</li>
+          </ul>
+        </div>
+
+        <div class="script-demo">
+          &lt;iframe
+          src="https://www.google.com"
+          width="100%"
+          height="400"
+          style="border: 2px solid #e74c3c; border-radius: 8px;"
+          title="Google.com iframe for cross-origin testing"
+          loading="lazy"
+          referrerpolicy="no-referrer"&gt;
+          &lt;/iframe&gt;
+        </div>
+
+        <iframe src="https://www.google.com" width="100%" height="400"
+          style="border: 2px solid #e74c3c; border-radius: 8px;" title="Google.com iframe for cross-origin testing"
+          loading="lazy" referrerpolicy="no-referrer">
+        </iframe>
+
+        <div class="script-info">
+          <h4>Cross-Origin Iframe Features:</h4>
+          <ul>
+            <li><strong>Source:</strong> https://www.google.com</li>
+            <li><strong>Referrer Policy:</strong> no-referrer</li>
+            <li><strong>Loading:</strong> lazy loading for performance</li>
+            <li><strong>Styling:</strong> Red border to distinguish from embedded iframe</li>
+            <li><strong>Purpose:</strong> Test how inspector handles external website content</li>
+          </ul>
+        </div>
+
+        <div class="script-info">
+          <h4>Expected Behavior:</h4>
+          <ul>
+            <li><strong>Cross-Origin Restrictions:</strong> Same-origin policy will limit access</li>
+            <li><strong>Script Detection:</strong> May not be able to inspect internal scripts</li>
+            <li><strong>Security:</strong> Demonstrates real-world iframe limitations</li>
+            <li><strong>Testing:</strong> Shows inspector's behavior with external content</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Testing Instructions Section -->
+      <div class="section">
+        <h2>🧪 Testing Instructions</h2>
+
+        <div class="script-info">
+          <h4>For PCI Scripts Inspector Testing:</h4>
+          <ol>
+            <li><strong>Scan this page</strong> using the PCI Scripts Inspector service</li>
+            <li><strong>Verify script detection</strong> - should find all 21 scripts (15 + 6 iframe)</li>
+            <li><strong>Check integration types</strong> - inline vs external vs iframe</li>
+            <li><strong>Validate security headers</strong> - CSP, X-Frame-Options, etc.</li>
+            <li><strong>Test integrity hashes</strong> - some scripts have SRI, others don't</li>
+            <li><strong>Verify attributes</strong> - crossorigin, async, defer, etc.</li>
+            <li><strong>Check dynamic loading</strong> - scripts loaded via JavaScript</li>
+            <li><strong>Test iframe handling</strong> - nested script detection within iframes</li>
+          </ol>
+        </div>
+
+        <div class="script-info">
+          <h4>Expected Results:</h4>
+          <ul>
+            <li><strong>InspectionJob Status:</strong> Should complete successfully</li>
+            <li><strong>Script Count:</strong> 21 total scripts detected (15 main + 6 iframe)</li>
+            <li><strong>Security Headers:</strong> All major security headers present</li>
+            <li><strong>Report Generation:</strong> Should create detailed report with script analysis</li>
+            <li><strong>Iframe Detection:</strong> Should detect scripts within iframe content</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>🔒 PCI Scripts Inspector Demo Page | Created for testing and validation purposes</p>
+      <p>This page demonstrates various script integration patterns for PCI DSS compliance testing</p>
+      <p><a href="https://github.com/dtelega/pci-dss-complience-testing" target="_blank">View on GitHub</a></p>
+    </div>
+  </div>
+
+  <!-- Additional External Scripts for Testing -->
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"
+    integrity="sha384-xyz789abc123def456ghi789jkl012mno345pqr678stu901vwx234yz567abc890"
+    crossorigin="anonymous"></script>
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"
+    integrity="sha384-def456ghi789jkl012mno345pqr678stu901vwx234yz567abc890def123ghi456"
+    crossorigin="anonymous"></script>
+
+  <!-- Stripe.js for payment processing -->
+  <script src="https://js.stripe.com/v3/"
+    integrity="sha384-abc123def456ghi789jkl012mno345pqr678stu901vwx234yz567abc890def123"
+    crossorigin="anonymous"></script>
+
+  <!-- Google Analytics -->
+  <script src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID" async></script>
+
+  <!-- Custom widget script -->
+  <script src="https://cdn.example.com/widget.js"
+    integrity="sha384-def456ghi789jkl012mno345pqr678stu901vwx234yz567abc890def123ghi456" crossorigin="anonymous" defer
+    data-widget-id="payment-form" data-environment="production"></script>
+
+  <!-- jQuery legacy script -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Polyfill.io for older browsers -->
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js"
+    integrity="sha384-xyz789abc123def456ghi789jkl012mno345pqr678stu901vwx234yz567abc890"
+    crossorigin="anonymous"></script>
+
+  <!-- Analytics script with data attributes -->
+  <script src="https://cdn.example.com/analytics.js" data-track-pageview="true" data-environment="production"
+    data-version="2.1.0"></script>
+
+  <!-- jQuery legacy without security attributes -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+  <!-- Vue.js ES6 module -->
+  <script type="module">
+    import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+
+    const app = createApp({
+      data() {
+        return {
+          message: 'Vue.js loaded successfully!'
+        };
+      }
+    });
+
+    app.mount('#vue-app');
+  </script>
+
+  <!-- Inline script with complex logic -->
+  <script>
+    // Complex payment processing logic
+    class PaymentProcessor {
+      constructor() {
+        this.apiKey = 'pk_test_1234567890abcdef';
+        this.endpoint = 'https://api.stripe.com/v1';
+      }
+
+      async processPayment(paymentData) {
+        try {
+          const response = await fetch(`${this.endpoint}/payment_intents`, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${this.apiKey}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(paymentData)
+          });
+
+          return await response.json();
+        } catch (error) {
+          console.error('Payment processing failed:', error);
+          throw error;
+        }
+      }
+    }
+
+    // Initialize payment processor
+    window.paymentProcessor = new PaymentProcessor();
+  </script>
+
+  <!-- Basic analytics tracking inline script -->
+  <script>
+    // Basic analytics tracking
+    console.log('Page loaded:', window.location.href);
+    const pageLoadTime = Date.now();
+    localStorage.setItem('lastVisit', pageLoadTime);
+  </script>
+
+  <!-- Payment form validation inline script -->
+  <script>
+    function validatePaymentForm() {
+      const cardNumber = document.getElementById('cardNumber')?.value;
+      const expiry = document.getElementById('expiry')?.value;
+
+      if (!cardNumber || cardNumber.length !== 16) {
+        alert('Invalid card number');
+        return false;
+      }
+
+      if (!expiry || !/^\d{2}\/\d{2}$/.test(expiry)) {
+        alert('Invalid expiry date');
+        return false;
+      }
+
+      return true;
+    }
+  </script>
+
+  <!-- CSRF token generation inline script -->
+  <script>
+    // Generate CSRF token for form submission
+    function generateCSRFToken() {
+      const token = Math.random().toString(36).substring(2, 15) +
+        Math.random().toString(36).substring(2, 15);
+      const tokenElement = document.getElementById('csrfToken');
+      if (tokenElement) {
+        tokenElement.value = token;
+      }
+      return token;
+    }
+
+    // Auto-generate on page load
+    document.addEventListener('DOMContentLoaded', generateCSRFToken);
+  </script>
+
+  <!-- Dynamic script loading inline script -->
+  <script>
+    // Dynamically load scripts based on user preferences
+    function loadUserPreferences() {
+      const userPrefs = localStorage.getItem('userPreferences');
+      if (userPrefs && JSON.parse(userPrefs).analytics) {
+        const script = document.createElement('script');
+        script.src = 'https://cdn.example.com/analytics.js';
+        script.async = true;
+        document.head.appendChild(script);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadUserPreferences);
+  </script>
+
+  <!-- Feature detection and polyfill loading inline script -->
+  <script>
+    // Load polyfills for older browsers
+    if (!window.Promise) {
+      const script = document.createElement('script');
+      script.src = 'https://cdn.polyfill.io/v2/polyfill.min.js';
+      script.integrity = 'sha384-xyz789abc123def456ghi789jkl012mno345pqr678stu901vwx234yz567abc890';
+      script.crossOrigin = 'anonymous';
+      document.head.appendChild(script);
+    }
+  </script>
+
+  <!-- Inline script with external dependencies -->
+  <script>
+    // Script that depends on external libraries
+    document.addEventListener('DOMContentLoaded', function () {
+      if (window.axios) {
+        console.log('Axios loaded successfully');
+
+        // Test API call
+        axios.get('https://jsonplaceholder.typicode.com/posts/1')
+          .then(response => {
+            console.log('API response:', response.data);
+          })
+          .catch(error => {
+            console.error('API error:', error);
+          });
+      }
+
+      if (window._) {
+        console.log('Lodash loaded successfully');
+        const numbers = [1, 2, 3, 4, 5];
+        const doubled = _.map(numbers, n => n * 2);
+        console.log('Doubled numbers:', doubled);
+      }
+
+      if (window.moment) {
+        console.log('Moment.js loaded successfully');
+        const now = moment().format('YYYY-MM-DD HH:mm:ss');
+        console.log('Current time:', now);
+      }
+    });
+  </script>
+
+</body>
+
+</html>
